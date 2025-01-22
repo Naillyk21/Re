@@ -1,5 +1,5 @@
 // app.module.ts
-import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { Module, MiddlewareConsumer, RequestMethod, Logger } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { HospitalsModule } from './hospitals/hospitals.module';
@@ -18,7 +18,7 @@ import { Utilisateur } from './entities/Utilisateur';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [__dirname + '/entities/*.js'],// Inclure toutes les entités nécessaires
+      entities: [Hospital, Utilisateur], // Inclure toutes les entités nécessaires
       synchronize: false, // Synchronisation activée pour développement
       logging: true, // Active les logs SQL
       ssl: {
@@ -28,6 +28,10 @@ import { Utilisateur } from './entities/Utilisateur';
   ],
 })
 export class AppModule {
+  constructor() {
+    Logger.log('AppModule chargé. Entités incluses : Hospital et Utilisateur.', 'AppModule');
+  }
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggerMiddleware)

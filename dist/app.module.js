@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 // app.module.ts
@@ -12,8 +15,13 @@ const common_1 = require("@nestjs/common");
 const users_module_1 = require("./users/users.module");
 const logger_middleware_1 = require("./middleware/logger.middleware");
 const hospitals_module_1 = require("./hospitals/hospitals.module");
+const Hospital_1 = require("./entities/Hospital");
 const typeorm_1 = require("@nestjs/typeorm");
+const Utilisateur_1 = require("./entities/Utilisateur");
 let AppModule = class AppModule {
+    constructor() {
+        common_1.Logger.log('AppModule chargé. Entités incluses : Hospital et Utilisateur.', 'AppModule');
+    }
     configure(consumer) {
         consumer
             .apply(logger_middleware_1.LoggerMiddleware)
@@ -33,7 +41,7 @@ exports.AppModule = AppModule = __decorate([
                 username: process.env.DB_USER,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
-                entities: [__dirname + '/entities/*.ts'], // Inclure toutes les entités nécessaires
+                entities: [Hospital_1.Hospital, Utilisateur_1.Utilisateur], // Inclure toutes les entités nécessaires
                 synchronize: false, // Synchronisation activée pour développement
                 logging: true, // Active les logs SQL
                 ssl: {
@@ -41,5 +49,6 @@ exports.AppModule = AppModule = __decorate([
                 },
             }),
         ],
-    })
+    }),
+    __metadata("design:paramtypes", [])
 ], AppModule);
