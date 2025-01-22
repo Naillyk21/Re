@@ -11,13 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
+const common_1 = require("@nestjs/common");
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = yield core_1.NestFactory.create(app_module_1.AppModule);
-        app.useGlobalPipes();
-        const PORT = process.env.PORT || 3000;
-        yield app.listen(PORT);
-        console.log(`✅ Serveur NestJS démarré sur http://localhost:${PORT}`);
+        yield app.listen(3000, () => {
+            common_1.Logger.log(`Application lancée sur le port 3000`, 'Bootstrap');
+        });
     });
 }
 bootstrap();

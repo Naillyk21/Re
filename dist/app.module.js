@@ -11,15 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const hospitals_module_1 = require("./hospitals/hospitals.module");
+const typeorm_1 = require("@nestjs/typeorm");
+// Tes modules métiers
 const users_module_1 = require("./users/users.module");
+const hospitals_module_1 = require("./hospitals/hospitals.module");
+// Ton middleware de logs
 const logger_middleware_1 = require("./middleware/logger.middleware");
-// Import de notre module de BDD
-const database_module_1 = require("./entities/database.module");
 let AppModule = class AppModule {
     constructor() {
-        common_1.Logger.log('AppModule chargé.', 'AppModule');
+        // Optionnel : logguer la config DB (sauf le mot de passe en clair)
+        common_1.Logger.log(`AppModule chargé.`, 'AppModule');
+        common_1.Logger.log(`DB_HOST: ${process.env.DB_HOST}`, 'AppModule');
+        common_1.Logger.log(`DB_PORT: ${process.env.DB_PORT}`, 'AppModule');
+        common_1.Logger.log(`DB_USER: ${process.env.DB_USER}`, 'AppModule');
+        common_1.Logger.log(`DB_NAME: ${process.env.DB_NAME}`, 'AppModule');
+        // Logger.log(`DB_PASS: ${process.env.DB_PASSWORD}`, 'AppModule'); // À éviter en clair
     }
+    // Conserve ton LoggerMiddleware
     configure(consumer) {
         consumer
             .apply(logger_middleware_1.LoggerMiddleware)
@@ -30,11 +38,30 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            // Notre module qui configure TypeORM
-            database_module_1.DatabaseModule,
-            // Modules métiers
-            hospitals_module_1.HospitalsModule,
+            // -- Configuration de la connexion TypeORM --
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'postgres',
+                // Récupère et convertit les variables d'environnement
+                host: process.env.DB_HOST,
+                port: parseInt(process.env.DB_PORT || '5432', 10),
+                username: process.env.DB_USER,
+                password: process.env.DB_PASSWORD,
+                database: process.env.DB_NAME,
+                // Active si tu veux charger automatiquement les entités
+                // que tu importes via TypeOrmModule.forFeature(...)
+                autoLoadEntities: true,
+                // Si tu veux lister explicitement tes entités, décommente :
+                // entities: [Hospital, Utilisateur],
+                synchronize: false, // ou true en dev (mais attention en prod)
+                logging: true,
+                // Selon ton besoin SSL :
+                // ssl: { rejectUnauthorized: false },
+                // ou ssl: true
+                ssl: true,
+            }),
+            // -- Import des modules métiers --
             users_module_1.UsersModule,
+            hospitals_module_1.HospitalsModule,
         ],
     }),
     __metadata("design:paramtypes", [])
