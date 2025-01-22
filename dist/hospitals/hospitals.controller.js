@@ -37,6 +37,11 @@ let HospitalsController = class HospitalsController {
             return this.hospitalsService.createHospital(createHospitalDto);
         });
     }
+    getAllHospitals() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.hospitalsService.getAllHospitals();
+        });
+    }
 };
 exports.HospitalsController = HospitalsController;
 __decorate([
@@ -46,6 +51,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HospitalsController.prototype, "createHospital", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], HospitalsController.prototype, "getAllHospitals", null);
 exports.HospitalsController = HospitalsController = __decorate([
     (0, common_1.Controller)('hospitals'),
     __metadata("design:paramtypes", [hospitals_service_1.HospitalsService])

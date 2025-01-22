@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Utilisateur.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255, default: 'default@gmail.com' }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 255, default: 'default@gmail.com', nullable: true }),
     __metadata("design:type", Object)
 ], Utilisateur.prototype, "email", void 0);
 __decorate([

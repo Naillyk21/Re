@@ -36,7 +36,7 @@ exports.AppModule = AppModule = __decorate([
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
                 entities: [Utilisateur_1.Utilisateur, Hospital_1.Hospital], // Inclure toutes les entités nécessaires
-                synchronize: true, // Synchronisation activée pour développement
+                synchronize: false, // Synchronisation activée pour développement
                 logging: true, // Active les logs SQL
                 ssl: {
                     rejectUnauthorized: false, // Utilisé pour des connexions SSL sans vérification stricte

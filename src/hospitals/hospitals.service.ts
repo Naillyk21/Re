@@ -30,4 +30,15 @@ export class HospitalsService {
       throw new Error('Erreur interne du serveur');
     }
   }
+
+  async getAllHospitals(): Promise<Hospital[]> {
+    const hospitalRepository = AppDataSource.getRepository(Hospital);
+
+    try {
+      return await hospitalRepository.find();
+    } catch (error) {
+      console.error('Erreur lors de la récupération des hôpitaux :', error);
+      throw new Error('Erreur interne du serveur');
+    }
+  }
 }

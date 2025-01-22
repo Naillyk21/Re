@@ -47,6 +47,18 @@ let HospitalsService = class HospitalsService {
             }
         });
     }
+    getAllHospitals() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const hospitalRepository = db_1.AppDataSource.getRepository(Hospital_1.Hospital);
+            try {
+                return yield hospitalRepository.find();
+            }
+            catch (error) {
+                console.error('Erreur lors de la récupération des hôpitaux :', error);
+                throw new Error('Erreur interne du serveur');
+            }
+        });
+    }
 };
 exports.HospitalsService = HospitalsService;
 exports.HospitalsService = HospitalsService = __decorate([

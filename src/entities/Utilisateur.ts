@@ -5,7 +5,7 @@ export class Utilisateur {
   @PrimaryGeneratedColumn()
   id: number; // Clé primaire auto-générée
 
-  @Column({ type: 'varchar', length: 255, default: 'default@gmail.com' })
+  @Column({ type: 'varchar', length: 255, default: 'default@gmail.com' , nullable: true })
   email: string | null;
 
   @Column({ type: 'varchar', length: 255, default: 'defaultpassword' })

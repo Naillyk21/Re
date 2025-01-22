@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Get } from '@nestjs/common';
 import { HospitalsService } from './hospitals.service';
 import { Hospital } from '../entities/Hospital';
 
@@ -25,5 +25,10 @@ export class HospitalsController {
     }
 
     return this.hospitalsService.createHospital(createHospitalDto);
+  }
+
+  @Get()
+  async getAllHospitals(): Promise<Hospital[]> {
+    return this.hospitalsService.getAllHospitals();
   }
 }
