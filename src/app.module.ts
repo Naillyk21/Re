@@ -1,35 +1,26 @@
-// app.module.ts
 import { Module, MiddlewareConsumer, RequestMethod, Logger } from '@nestjs/common';
+import { HospitalsModule } from './hospitals/hospitals.module';
 import { UsersModule } from './users/users.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { HospitalsModule } from './hospitals/hospitals.module';
-import { Hospital } from './entities/Hospital';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Utilisateur } from './entities/Utilisateur';
+// Import de notre module de BDD
+import { DatabaseModule } from './entities/database.module';
 
 @Module({
   imports: [
-    UsersModule,
+    // Notre module qui configure TypeORM
+    DatabaseModule,
+
+    // Modules métiers
     HospitalsModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT || '5432', 10),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: [Hospital, Utilisateur], // Inclure toutes les entités nécessaires
-      synchronize: false, // Synchronisation activée pour développement
-      logging: true, // Active les logs SQL
-      ssl: {
-        rejectUnauthorized: false, // Utilisé pour des connexions SSL sans vérification stricte
-      },
-    }),
+    UsersModule,
   ],
 })
 export class AppModule {
   constructor() {
-    Logger.log('AppModule chargé. Entités incluses : Hospital et Utilisateur.', 'AppModule');
+    Logger.log(
+      'AppModule chargé.',
+      'AppModule',
+    );
   }
 
   configure(consumer: MiddlewareConsumer) {

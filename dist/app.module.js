@@ -10,17 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-// app.module.ts
 const common_1 = require("@nestjs/common");
+const hospitals_module_1 = require("./hospitals/hospitals.module");
 const users_module_1 = require("./users/users.module");
 const logger_middleware_1 = require("./middleware/logger.middleware");
-const hospitals_module_1 = require("./hospitals/hospitals.module");
-const Hospital_1 = require("./entities/Hospital");
-const typeorm_1 = require("@nestjs/typeorm");
-const Utilisateur_1 = require("./entities/Utilisateur");
+// Import de notre module de BDD
+const database_module_1 = require("./entities/database.module");
 let AppModule = class AppModule {
     constructor() {
-        common_1.Logger.log('AppModule chargé. Entités incluses : Hospital et Utilisateur.', 'AppModule');
+        common_1.Logger.log('AppModule chargé.', 'AppModule');
     }
     configure(consumer) {
         consumer
@@ -32,22 +30,11 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            users_module_1.UsersModule,
+            // Notre module qui configure TypeORM
+            database_module_1.DatabaseModule,
+            // Modules métiers
             hospitals_module_1.HospitalsModule,
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: process.env.DB_HOST,
-                port: parseInt(process.env.DB_PORT || '5432', 10),
-                username: process.env.DB_USER,
-                password: process.env.DB_PASSWORD,
-                database: process.env.DB_NAME,
-                entities: [Hospital_1.Hospital, Utilisateur_1.Utilisateur], // Inclure toutes les entités nécessaires
-                synchronize: false, // Synchronisation activée pour développement
-                logging: true, // Active les logs SQL
-                ssl: {
-                    rejectUnauthorized: false, // Utilisé pour des connexions SSL sans vérification stricte
-                },
-            }),
+            users_module_1.UsersModule,
         ],
     }),
     __metadata("design:paramtypes", [])
