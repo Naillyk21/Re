@@ -22,13 +22,27 @@ const Hospital_1 = require("../entities/Hospital");
 let HospitalsService = class HospitalsService {
     createHospital(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const hospitalRepository = db_1.AppDataSource.getRepository(Hospital_1.Hospital);
-            const hospital = hospitalRepository.create(data);
             try {
-                return yield hospitalRepository.save(hospital);
+                // Vérification si l'entité est correctement enregistrée
+                const hospitalRepository = db_1.AppDataSource.getRepository(Hospital_1.Hospital);
+                console.log('Entité Hospital accessible :', hospitalRepository.metadata);
+                // Création d'un nouvel hôpital
+                const hospital = hospitalRepository.create(data);
+                console.log('Données pour la création de l\'hôpital :', data);
+                // Sauvegarde dans la base de données
+                const savedHospital = yield hospitalRepository.save(hospital);
+                console.log('Hôpital sauvegardé avec succès :', savedHospital);
+                return savedHospital;
             }
             catch (error) {
-                console.error('Erreur lors de l\'ajout de l\'hôpital :', error);
+                // Vérification et typage explicite de l'erreur
+                if (error instanceof Error) {
+                    console.error('Erreur lors de l\'ajout de l\'hôpital :', error.message);
+                    console.error('Stack trace :', error.stack);
+                }
+                else {
+                    console.error('Erreur inconnue lors de l\'ajout de l\'hôpital :', error);
+                }
                 throw new Error('Erreur interne du serveur');
             }
         });
