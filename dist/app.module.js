@@ -47,17 +47,12 @@ exports.AppModule = AppModule = __decorate([
                 username: process.env.DB_USER,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
-                // Active si tu veux charger automatiquement les entités
-                // que tu importes via TypeOrmModule.forFeature(...)
                 autoLoadEntities: true,
-                // Si tu veux lister explicitement tes entités, décommente :
-                // entities: [Hospital, Utilisateur],
-                synchronize: false, // ou true en dev (mais attention en prod)
+                synchronize: false,
                 logging: true,
-                // Selon ton besoin SSL :
-                // ssl: { rejectUnauthorized: false },
-                // ou ssl: true
-                ssl: true,
+                ssl: {
+                    rejectUnauthorized: false,
+                },
             }),
             // -- Import des modules métiers --
             users_module_1.UsersModule,

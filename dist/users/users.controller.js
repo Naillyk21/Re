@@ -37,6 +37,11 @@ let UsersController = class UsersController {
             return this.usersService.createUser(email, password, idrole);
         });
     }
+    getAllUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.usersService.getAllUsers();
+        });
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -46,6 +51,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createUser", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getAllUsers", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

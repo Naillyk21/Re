@@ -19,4 +19,9 @@ export class UsersService {
       throw new Error('Erreur interne du serveur');
     }
   }
+
+  async getAllUsers(): Promise<Utilisateur[]> {
+      return this.userRepository.find();
+    }
+
 }

@@ -42,6 +42,11 @@ let UsersService = class UsersService {
             }
         });
     }
+    getAllUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.userRepository.find();
+        });
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

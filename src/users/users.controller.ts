@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Utilisateur } from '../entities/Utilisateur';
 
@@ -21,4 +21,10 @@ export class UsersController {
 
     return this.usersService.createUser(email, password, idrole);
   }
+
+    @Get()
+    async getAllUsers(): Promise<Utilisateur[]> {
+      return this.usersService.getAllUsers();
+    }
+
 }
