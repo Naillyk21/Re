@@ -18,7 +18,7 @@ import { Utilisateur } from './entities/Utilisateur';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Utilisateur, Hospital], // Inclure toutes les entités nécessaires
+      entities: [__dirname + '/entities/*.js'],// Inclure toutes les entités nécessaires
       synchronize: false, // Synchronisation activée pour développement
       logging: true, // Active les logs SQL
       ssl: {

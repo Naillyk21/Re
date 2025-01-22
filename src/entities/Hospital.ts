@@ -27,10 +27,10 @@ export class Hospital {
   longitude!: number;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  finess!: string;
+  finess?: string;
 
   @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
-  occupancy_rate!: number;
+  occupancy_rate?: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   last_update!: Date;
